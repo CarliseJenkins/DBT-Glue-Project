@@ -1,6 +1,6 @@
 # AWS Glue Job Creation - Python Shell 
 
-   GLUE JOB CREATE TO LOAD THE DATA FROM API TO AN S3 BUCKET: 
+   #GLUE JOB CREATE TO LOAD THE DATA FROM API TO AN S3 BUCKET: 
 
 
 import boto3
