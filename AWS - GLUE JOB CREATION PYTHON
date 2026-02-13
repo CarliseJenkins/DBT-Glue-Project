@@ -2,25 +2,19 @@
 
    GLUE JOB CREATE TO LOAD THE DATA FROM API TO AN S3 BUCKET: 
 
+
 import boto3
-
 import requests
-
 import base64
-
 from botocore.exceptions import NoCredentialsError, PartialCredentialsError
 
- 
-
-# Example usage
 
 github_url = "https://raw.githubusercontent.com/deacademygit/project-data/refs/heads/main/country_details.json"  # Raw file URL from GitHub
 
-bucket_name = "your_bucket_name"  # The S3 bucket where the file will be uploaded
+bucket_name = "dbt-glueproject-bucket" # The S3 bucket where the file will be uploaded
 
-s3_key = "data/country_details.json"  # The key (path) in the S3 bucket
+s3_key =  "Data/country_details.json"   # The key (path) in the S3 bucket
 
- 
 
 def fetch_data_from_github_and_upload_to_s3(github_url, bucket_name, s3_key):
 
@@ -64,7 +58,7 @@ def fetch_data_from_github_and_upload_to_s3(github_url, bucket_name, s3_key):
 
         print(f"Error: AWS credentials are missing or incomplete. {e}")
 
-    except requests. exceptions.RequestException as e:
+    except requests.exceptions.RequestException as e:
 
         print(f"Error fetching the file from GitHub: {e}")
 
@@ -75,3 +69,10 @@ def fetch_data_from_github_and_upload_to_s3(github_url, bucket_name, s3_key):
  
 
 fetch_data_from_github_and_upload_to_s3(github_url, bucket_name, s3_key)
+
+
+
+ 
+
+ 
+
