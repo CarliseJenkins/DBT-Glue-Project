@@ -1,0 +1,55 @@
+-- Setting Role and Warehouse on Snowflake SQL Worksheet 
+
+USE ROLE ACCOUNTADMIN;
+USE WAREHOUSE COMPUTE_WH;
+
+-- Creating DB in Snowflake 
+CREATE OR REPLACE DATABASE GLUEDB;
+
+--Creating Storage Integration Snowflake
+CREATE OR REPLACE STORAGE INTEGRATION GLUE_S3_INT
+   TYPE = EXTERNAL_STAGE
+   STORAGE_PROVIDER = 'S3'
+   ENABLED = TRUE
+   STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::459181229130:role/snowflake_role'
+   STORAGE_ALLOWED_LOCATIONS = ('s3://dbt-glueproject-bucket/Data/country_details.json');
+
+
+--Using the  Values in  DESC to update the trust policy in AWS Snowflake IAM role
+ DESC INTEGRATION GLUE_S3_INT;
+
+
+-- values that need to be updated
+STORAGE_AWS_IAM_USER_ARN	= AWS - --Trust Policy parameter-- 
+=	arn:aws:iam::125466162004:user/8wbf1000-s	-- IAM Role for Snowflake account
+STORAGE_AWS_EXTERNAL_ID	= ExternalId  -- --Trust Policy parameter-- 
+NBC60802_SFCRole=3_WA8sg37SfD1VkPCRVjIugesvxKA=	
+
+--Creating  a stage in Snowflake
+CREATE OR REPLACE STAGE GLUEDB.PUBLIC.GLUE_S3_STAGE
+
+STORAGE_INTEGRATION = GLUE_S3_INT
+
+URL= 's3://dbt-glueproject-bucket/Data/country_details.json';
+
+-- Checking my connection with the s3 bucket 
+ls @GLUEDB.PUBLIC.GLUE_S3_STAGE;
+
+
+-- Check was Successful Now time create a table for the data
+
+CREATE OR REPLACE TABLE GLUEDB.PUBLIC.COUNTRY_DETAILS_CP
+(
+DATA VARIANT
+);
+
+
+
+
+
+
+
+
+
+
+
